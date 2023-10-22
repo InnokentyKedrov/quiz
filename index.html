@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="style.css" />
+    <title>Опрос об Илье Муромце</title>
+  </head>
+
+  <body class="body">
+    <main class="main">
+      <h1 class="title">Опрос об Илье Муромце</h1>
+      <form class="form">
+        <fieldset>
+          <legend class="form-label">
+            Как вы думаете, жил ли Илья Муромец на самом деле, или это литературный персонаж?
+          </legend>
+          <div class="form-check">
+            <input
+              class="form-check-input"
+              type="radio"
+              name="hero"
+              id="checkHero1"
+              value="Это выдуманный герой."
+              required
+            />
+            <label class="form-check-label" for="checkHero1"> Это выдуманный герой </label>
+          </div>
+          <div class="form-check">
+            <input
+              class="form-check-input"
+              type="radio"
+              name="hero"
+              id="checkHero2"
+              value="Это был живой человек."
+            />
+            <label class="form-check-label" for="checkHero2"> Это был живой человек </label>
+          </div>
+        </fieldset>
+
+        <fieldset>
+          <legend class="form-label">Почему вы так думаете?</legend>
+          <textarea class="area" name="area" id="area" cols="40" rows="3" required></textarea>
+        </fieldset>
+
+        <fieldset>
+          <legend class="form-label">Были ли вы в Муроме?</legend>
+          <div class="form-check">
+            <input
+              class="form-check-input"
+              type="radio"
+              name="murom"
+              id="murom1"
+              value="Был(а) в Муроме."
+              required
+            />
+            <label class="form-check-label" for="murom1"> Да </label>
+          </div>
+          <div class="form-check">
+            <input
+              class="form-check-input"
+              type="radio"
+              name="murom"
+              id="murom2"
+              value="Не был(а) в Муроме."
+            />
+            <label class="form-check-label" for="murom2"> Нет </label>
+          </div>
+        </fieldset>
+
+        <button type="submit" class="btn">Отправить</button>
+      </form>
+    </main>
+
+    <script src="https://cdn.jsdelivr.net/npm/axios@1.1.2/dist/axios.min.js"></script>
+    <script>
+      const TOKEN = "6576357682:AAEasTAVcLjZ46ikfLlx--OtG66QinL79IM";
+      const CHAT_ID = "-1002069195468";
+      const URI_API = `https:\\api.telegram.org/bot${TOKEN}/sendMessage`;
+      const main = document.querySelector(".main");
+
+      document.querySelector(".form").addEventListener("submit", function (e) {
+        e.preventDefault();
+
+        let message = `<b>Опрос об Илье Муромце</b>\n`;
+        message += `<b>1. </b>${this.hero.value}\n`;
+        message += `<b>2. </b>${this.area.value}\n`;
+        message += `<b>3. </b>${this.murom.value}`;
+
+        axios
+          .post(URI_API, {
+            chat_id: CHAT_ID,
+            parse_mode: "html",
+            text: message,
+          })
+          .then((res) => {
+            main.innerHTML = `<h1 class="title">Спасибо большое!<br>Ответ получен.</h1>`;
+          })
+          .catch((err) => console.warn(err))
+          .finally(() => console.log("Конец"));
+      });
+    </script>
+  </body>
+</html>

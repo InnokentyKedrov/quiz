@@ -11,18 +11,13 @@ document.querySelector(".form").addEventListener("submit", function (e) {
   message += `<b>2. </b>${this.area.value}\n`;
   message += `<b>3. </b>${this.murom.value}`;
 
-  fetch(URI_API, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({
+  axios
+    .post(URI_API, {
       chat_id: CHAT_ID,
       parse_mode: "html",
       text: message,
-    }),
-  })
-    .then(() => {
+    })
+    .then((res) => {
       main.innerHTML = `<h1 class="title">Спасибо большое!<br>Ответ получен.</h1>`;
     })
     .catch((err) => console.warn(err))

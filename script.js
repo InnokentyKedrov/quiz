@@ -1,6 +1,6 @@
 const TOKEN = "6576357682:AAEasTAVcLjZ46ikfLlx--OtG66QinL79IM";
 const CHAT_ID = "-1002069195468";
-const URI_API = `https:\\api.telegram.org/bot${TOKEN}/sendMessage`;
+const URI_API = `https://api.telegram.org/bot${TOKEN}/sendMessage`;
 const main = document.querySelector(".main");
 
 document.querySelector(".form").addEventListener("submit", function (e) {
@@ -17,7 +17,7 @@ document.querySelector(".form").addEventListener("submit", function (e) {
       parse_mode: "html",
       text: message,
     })
-    .then((res) => {
+    .then(() => {
       main.innerHTML = `<h1 class="title">Спасибо большое!<br>Ответ получен.</h1>`;
     })
     .catch((err) => console.warn(err))
